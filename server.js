@@ -6,13 +6,23 @@ var app = express();
 
 hbs.registerPartials(__dirname+'/views/partials');
 app.set('view engine', 'hbs');
-app.use(express.static(__dirname + '/public'));
 
 app.use((req, res, next)=> {
     let now = new Date().toString();
-    console.log(`${now}: ${req.method} ${req.url}`);
+    let log = `${now}: ${req.method} ${req.url} \n`;
+    fs.appendFile('server.log', log, (err) => {
+        if(err) {
+            console.log('Unnable to append to server.log.');
+        }
+    })
     next(); 
 });
+
+// app.use((req, res, next) => {
+//     res.render('maintenance.hbs');
+// });
+
+app.use(express.static(__dirname + '/public'));
 
 hbs.registerHelper('getCurrentYear', ()=> {
     return new Date().getFullYear();
