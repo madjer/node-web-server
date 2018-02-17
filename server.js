@@ -1,6 +1,6 @@
 const express = require('express');
 const hbs = require('hbs');
-const fs = require('rs');
+const fs = require('fs');
 
 var app = express();
 
